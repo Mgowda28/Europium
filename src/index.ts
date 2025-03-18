@@ -32,13 +32,15 @@ await prisma.user.createMany({
   ]
 })
 
-const users=await prisma.user.findMany();
+// const users=await prisma.user.findMany();
 
-app.get('/users', (c) => {
+app.get('/users', async (c) => {
+  const users = await prisma.user.findMany();
   return c.json(users);
 })
 
 app.post('/users', async (c) => {
+  // const users = await prisma.user.findMany();
   const { name, email, phoneNumber } = await c.req.json();
   const user = await prisma.user.create({
     data: { name, email, phoneNumber }
